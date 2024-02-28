@@ -4,9 +4,10 @@ import classes from "./PostsList.module.css";
 import { useState } from "react";
 import Modal from "./Modal.jsx";
 
-function PostsList() {
+function PostsList({isPosting, onStopPosting}) {
   const [enteredBody, setEnteredBody] = useState("");
   const [enteredAuthor, setEnteredAuthor] = useState("");
+
 
   function bodyChangeHandler(event) {
     setEnteredBody(event.target.value);
@@ -18,12 +19,15 @@ function PostsList() {
 
   return (
     <>
-      <Modal>
+      {isPosting ? (
+        <Modal onClose={onStopPosting}>
           <NewPost
             onBodyChange={bodyChangeHandler}
             onAuthorChange={authorChangeHandler}
           />
-      </Modal>
+        </Modal>
+      ) : null}
+
       <ul className={classes.posts}>
         <Post author={enteredAuthor} body={enteredBody} />
         <Post author="Mariana" body="learning vue" />
